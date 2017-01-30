@@ -1,9 +1,10 @@
 class Follow < ApplicationRecord
-  validates :followed_id, uniqueness: {scope: :follower_id}
+  validates :following_id, presence: true
+  validates :following_id, uniqueness: {scope: :follower_id}
 
   belongs_to :person_getting_followed,
     class_name: "User",
-    foreign_key: :followed_id,
+    foreign_key: :following_id,
     primary_key: :id
 
   belongs_to :person_following,

@@ -12,20 +12,23 @@
 
 ActiveRecord::Schema.define(version: 20170130204740) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "follows", force: :cascade do |t|
     t.integer  "follower_id"
     t.integer  "following_id"
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
-    t.index ["follower_id"], name: "index_follows_on_follower_id"
-    t.index [nil], name: "index_follows_on_followed_id"
+    t.index ["follower_id"], name: "index_follows_on_follower_id", using: :btree
+    t.index ["following_id"], name: "index_follows_on_following_id", using: :btree
   end
 
   create_table "posts", force: :cascade do |t|
     t.string  "img_url"
     t.text    "body",      null: false
     t.integer "author_id", null: false
-    t.index ["author_id"], name: "index_posts_on_author_id"
+    t.index ["author_id"], name: "index_posts_on_author_id", using: :btree
   end
 
   create_table "users", force: :cascade do |t|
@@ -38,9 +41,9 @@ ActiveRecord::Schema.define(version: 20170130204740) do
     t.string   "profile_pic"
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
-    t.index ["email"], name: "index_users_on_email", unique: true
-    t.index ["session_token"], name: "index_users_on_session_token", unique: true
-    t.index ["username"], name: "index_users_on_username", unique: true
+    t.index ["email"], name: "index_users_on_email", unique: true, using: :btree
+    t.index ["session_token"], name: "index_users_on_session_token", unique: true, using: :btree
+    t.index ["username"], name: "index_users_on_username", unique: true, using: :btree
   end
 
 end
