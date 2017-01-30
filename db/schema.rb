@@ -10,7 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170120012056) do
+ActiveRecord::Schema.define(version: 20170130201217) do
+
+  create_table "posts", force: :cascade do |t|
+    t.string  "img_url"
+    t.text    "body",      null: false
+    t.integer "author_id", null: false
+    t.index ["author_id"], name: "index_posts_on_author_id"
+  end
 
   create_table "users", force: :cascade do |t|
     t.string   "username",        null: false
