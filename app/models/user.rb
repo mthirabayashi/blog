@@ -5,6 +5,27 @@ class User < ApplicationRecord
 
   attr_reader :password
 
+  has_many :posts,
+    class_name: "Post",
+    foreign_key: :author_id,
+    primary_key: :id
+
+  has_many :follower,
+    class_name: "Follow",
+    foreign_key: :following_id,
+    primary_key: :id
+  has_many :followers,
+    through: :follower,
+    source: :person_following
+
+  has_many :following,
+    class_name: "Follow",
+    foreign_key: :follower_id,
+    primary_key: :id
+  has_many :followings,
+    through: :following,
+    source: :person_getting_followed
+
   after_initialize :ensure_session_token
 
   def self.find_by_credentials(username, password)
