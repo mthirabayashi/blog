@@ -2,8 +2,8 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import {Router, Route, IndexRoute, hashHistory} from 'react-router';
 import App from './app';
-// import LoginFormContainer from './session/login_form_container';
-// import SignUpFormContainer from './session/sign_up_form_container';
+import LoginFormContainer from './session/login_form_container';
+import SignUpFormContainer from './session/sign_up_form_container';
 // import {clearErrors} from '../actions/session_actions';
 // import {clearSearch} from '../actions/searches_actions';
 // import {fetchProfile} from '../actions/users_actions';
@@ -21,14 +21,14 @@ const Root = ({ store }) => {
   //   _clearErrors();
   // };
   //
-  // const _ensureSignedIn = (nextState, replace) => {
-  //   const currentUser = store.getState().session.currentUser;
-  //   if (!currentUser){
-  //     replace('/login');
-  //   }
-  //   _clearErrors();
-  //   _clearSearch();
-  // };
+  const _ensureSignedIn = (nextState, replace) => {
+    const currentUser = store.getState().session.currentUser;
+    if (!currentUser){
+      replace('/login');
+    }
+    // _clearErrors();
+    // _clearSearch();
+  };
   //
   // const _clearErrors = () => {
   //   store.dispatch(clearErrors());
@@ -46,8 +46,10 @@ const Root = ({ store }) => {
     <Provider store={store}>
       <Router history={hashHistory}>
         <Route path="/" component={App}>
-          <IndexRoute component={Posts}/>
+          <IndexRoute component={Posts} onEnter={_ensureSignedIn} />
         </Route>
+        <Route path="/login" component={LoginFormContainer}/>
+        <Route path="/signup" component={SignUpFormContainer}/>
       </Router>
     </Provider>
   );

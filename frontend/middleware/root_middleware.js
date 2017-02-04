@@ -1,6 +1,6 @@
 import {applyMiddleware} from 'redux';
 // import createLogger from 'redux-logger';
-// import SessionMiddleware from './session_middleware';
+import SessionMiddleware from './session_middleware';
 // import PostsMiddleware from './posts_middleware';
 // import UsersMiddleware from './users_middleware';
 // import CommentsMiddleware from './comments_middleware';
@@ -10,5 +10,6 @@ import {applyMiddleware} from 'redux';
 // const logger = createLogger();
 
 const RootMiddleware = applyMiddleware(
+  SessionMiddleware
 );
 export default RootMiddleware;
